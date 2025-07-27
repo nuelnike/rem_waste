@@ -17,6 +17,7 @@ This project is an end-to-end (E2E) test automation suite using [Playwright](htt
 ## Sample Test User
 
 Use the following test credentials to perform login operations:
+- Url: http://qa.nuelnike.com:5000/
 - Username: tester
 - Password: p@ssword
 

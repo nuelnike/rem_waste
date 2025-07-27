@@ -45,6 +45,6 @@ Use the following test credentials to perform login operations:
 - npx playwright test
 
 ### Playwright Test Command Options
-npx playwright test --headed            # Run tests with UI
-npx playwright test --project=chromium  # Run only on Chromium
-npx playwright show-report              # Show last test run report
+- npx playwright test --headed            # Run tests with UI
+- npx playwright test --project=chromium  # Run only on Chromium
+- npx playwright show-report              # Show last test run report

@@ -35,5 +35,16 @@ Use the following test credentials to perform login operations:
 
 ### 1. Clone the Repository
 
-- git clone https://github.com/yourusername/qa-todo-tests.git
-- cd qa-todo-tests
+- git clone https://github.com/nuelnike/rem_waste.git
+- cd rem_waste
+
+### 2. Install Packages
+- npm install
+
+### 3. Run Playwright
+- npx playwright test
+
+### Playwright Test Command Options
+npx playwright test --headed            # Run tests with UI
+npx playwright test --project=chromium  # Run only on Chromium
+npx playwright show-report              # Show last test run report

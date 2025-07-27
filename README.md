@@ -1,51 +1,57 @@
-# QA Automation Script written with Playwright for a Simple TODO App
+# Cypress Automated Test Suite
 
-This project is an end-to-end (E2E) test automation suite using [Playwright](https://playwright.dev/) for a sample TODO web application. It includes tests for the login functionality and the protected TODO list page.
+This project contains Cypress end-to-end test automation for validating:
+1. User login functionality
+2. TODO list features (authenticated user flow)
 
-## Features Tested
-
-- Login with valid credentials
-- Prevent access to TODO page without authentication
-- Access TODO list after successful login
-- View sample TODO items
-- Add new item
-- Remove existing item
-- Mark completed.
+These test scripts simulate real user behavior to ensure that core features of your web application are functioning correctly.
 
 ---
 
-## Sample Test User
-
-Use the following test credentials to perform login operations:
-- Url: http://qa.nuelnike.com:5000/
-- Username: tester
-- Password: p@ssword
-
 ## Project Structure
-- test-suite/
-- │
-- ├── tests/
-- │ ├── login.spec.ts # Tests login scenarios
-- │ └── todo.spec.ts # Tests todo list access and visibility
-- │
-- ├── playwright.config.ts # Playwright test runner config
-- ├── package.json
-- └── README.md
+- cypress/
+- └── e2e/
+- ├── login.cy.js
+- └── todo.cy.js
+
+---
 
 ## Getting Started
 
 ### 1. Clone the Repository
-
 - git clone https://github.com/nuelnike/rem_waste.git
 - cd rem_waste
 
-### 2. Install Packages
+### 2. Install Dependencies
 - npm install
 
-### 3. Run Playwright
-- npx playwright test
+### 3. Open Cypress Test Runner
+- npx cypress open
+- npx cypress run
 
-### Playwright Test Command Options
-- npx playwright test --headed            # Run tests with UI
-- npx playwright test --project=chromium  # Run only on Chromium
-- npx playwright show-report              # Show last test run report
+---
+
+## Credentials Used for Testing
+- BaseURL: http://qa.nuelnike.com:5000
+- Username: tester
+- Password: p@ssword
+
+## Test Coverage
+
+### 1. Login Test Suite (login.cy.js)
+This test suite validates the login form behavior for valid and invalid inputs.
+
+#### Tests Included:
+- Invalid Username	# Inputs an incorrect username and checks for error feedback.
+- Invalid Password	# Inputs a wrong password and checks for error feedback.
+- Valid Login, Password Toggle Tests & Successful login # Verify login & password toggle visibility 
+
+### 2. TODO Test Suite (todo.cy.js)
+This test suite validates the TODO list features, which require user authentication before access.
+
+#### Tests Included:
+- Add Empty Item	# Ensures empty task input is rejected and error is shown.
+- Clear All Items	# Clears the TODO list and verifies success.
+- Add Items	        # Adds multiple new TODO tasks and verifies their appearance.
+- Remove Items	    # Deletes tasks and confirms their removal.
+- Logout	        # Logs the user out and confirms redirect + message.

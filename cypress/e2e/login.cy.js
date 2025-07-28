@@ -7,7 +7,7 @@
  *  - The password visibility toggle behaves as expected.
  * 
  * @testSuite User Login Test Cases
- * @baseURL http://localhost:5000/auth/login
+ * @baseURL https://simple-todo-manager.onrender.com/auth/login
  * 
  * @tests
  * 1. Negative Test - Invalid Username:
@@ -31,7 +31,7 @@
 describe('User login test cases', () => {
 
   // Define constants used throughout the tests
-  const url = 'http://localhost:5000/auth/login';
+  const url = 'https://simple-todo-manager.onrender.com/auth/login';
   const username_input_identifier = "#username";
   const password_input_identifier = "#password";
   const username = "tester";

@@ -6,7 +6,7 @@
  * as well as checking logout behavior.
  *
  * @testSuite Todo Test Cases
- * @baseURL http://localhost:5000
+ * @baseURL https://simple-todo-manager.onrender.com
  *
  * @setup
  * Before each test:
@@ -45,7 +45,7 @@
 describe('Todo test cases', () => {
 
     // Define constants for use in multiple tests
-    const url = 'http://localhost:5000';
+    const url = 'https://simple-todo-manager.onrender.com';
     const username_input_identifier = "#username";
     const password_input_identifier = "#password";
     const username = "tester";

@@ -80,6 +80,7 @@ describe('Todo test cases', () => {
         // Wait for response and verify error message
         cy.wait(1000);
         cy.contains("Enter text to add item").should("be.visible");
+        cy.screenshot('Add-empty-item');
     });
 
     // Test: User clears all items from the TODO list
@@ -91,6 +92,7 @@ describe('Todo test cases', () => {
 
         // Confirm that the list is empty
         cy.contains("No tasks available, create new task.").should("be.visible");
+        cy.screenshot('Clear-todo-items');
     });
 
     // Test: Add multiple new TODO items to the list
@@ -112,6 +114,7 @@ describe('Todo test cases', () => {
 
             // Assert that each added item is now visible in the list
             cy.get(`.todo-list > :nth-child(${i+1})`).should("be.visible");
+            cy.screenshot(`Create-${todo_item_arr[i]}-todo-item`);
         }
     });
 
@@ -124,6 +127,7 @@ describe('Todo test cases', () => {
 
         // Confirm item removal message
         cy.contains("item removed successfully").should("be.visible");
+            cy.screenshot('Delete-a-todo-item');
     });
 
     // Test: Logout functionality
@@ -136,6 +140,7 @@ describe('Todo test cases', () => {
 
         // Confirm logout success message is shown
         cy.contains("logout was successfully").should("be.visible");
+        cy.screenshot('User-logout');
     });
 
 });

@@ -56,6 +56,7 @@ describe('User login test cases', () => {
 
     // Assert that an error message is visible
     cy.contains("Error").should("be.visible");
+    cy.screenshot('login-with-invalid-username');
   });
 
   // Test: Login attempt with an invalid password
@@ -74,6 +75,7 @@ describe('User login test cases', () => {
 
     // Assert that an error message appears
     cy.contains("Error").should("be.visible");
+    cy.screenshot('login-with-invalid-password');
   });
 
   // Test: Successful login with valid credentials and password toggle behavior
@@ -100,6 +102,7 @@ describe('User login test cases', () => {
 
     // Assert that a success message is visible on successful login
     cy.contains("Success").should("be.visible");
+    cy.screenshot('login-with-valid-data');
   });
 
 });

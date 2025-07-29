@@ -72,3 +72,12 @@ This test suite validates the TODO list features, which require user authenticat
 - Add Items	        # Adds multiple new TODO tasks and verifies their appearance.
 - Remove Items	    # Deletes tasks and confirms their removal.
 - Logout	        # Logs the user out and confirms redirect + message.
+
+## Reporting
+
+### Cypress:
+- Screenshots saved in /cypress/screenshots
+
+### Postman:
+- Detailed test results in Postman console
+- Response validation for each request

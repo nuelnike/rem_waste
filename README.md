@@ -9,6 +9,8 @@ These test scripts simulate real user behavior to ensure that core features of y
 ---
 
 ## Project Structure
+- API/
+- └── postman_collection.json
 - cypress/
 - └── e2e/
 - ├── login.cy.js
@@ -17,6 +19,8 @@ These test scripts simulate real user behavior to ensure that core features of y
 ---
 
 ## Getting Started
+
+## UI Setup
 
 ### 1. Clone the Repository
 - git clone https://github.com/nuelnike/rem_waste.git
@@ -29,12 +33,15 @@ These test scripts simulate real user behavior to ensure that core features of y
 - npx cypress open
 - npx cypress run
 
----
-
 ## Credentials Used for Testing
 - BaseURL: http://qa.nuelnike.com:5000
 - Username: tester
 - Password: p@ssword
+
+## API Setup
+- Run Postman
+- Import collection from API folder
+- After import, click on the colletion to run
 
 ## Test Coverage
 

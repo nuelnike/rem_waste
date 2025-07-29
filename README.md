@@ -8,13 +8,23 @@ These test scripts simulate real user behavior to ensure that core features of y
 
 ---
 
-## Project Structure
-- API/
-- └── postman_collection.json
-- cypress/
-- └── e2e/
-- ├── login.cy.js
-- └── todo.cy.js
+## Test Structure
+
+### Cypress UI Tests
+| Test File          | Description                                                                 |
+|--------------------|-----------------------------------------------------------------------------|
+| `login.cy.js`      | Tests login functionality with valid/invalid credentials                    |
+| `todo.cy.js`       | Tests full todo CRUD operations with randomized test data               |
+
+### Postman API Tests
+| Collection File                          | Description                                                                 |
+|------------------------------------------|-----------------------------------------------------------------------------|
+| `Rem_Waste.postman_collection.json`      | Tests REST API endpoints for posts resource with positive/negative scenarios |
+
+## Prerequisites
+- Node.js v16+
+- Cypress v10+
+- Postman (for API tests)
 
 ---
 

@@ -1,0 +1,368 @@
+{
+	"info": {
+		"_postman_id": "17eccba7-0a07-47cf-9366-143eda6dcd9f",
+		"name": "Rem_Waste",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8914259"
+	},
+	"item": [
+		{
+			"name": "Get posts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let res = pm.response.json();\r",
+							"let count_posts = res.length > 0;\r",
+							"    \r",
+							"pm.test(\"Confirm list of posts available.\", () => {\r",
+							"    pm.expect(count_posts).to.be.true;\r",
+							"    if (count_posts) pm.collectionVariables.set(\"posts\", JSON.stringify(res));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/posts",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get post",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let posts = JSON.parse(pm.variables.get(\"posts\"));\r",
+							"let post = posts[0];\r",
+							"let testCase = pm.variables.get(\"testCase\"); \r",
+							"let cycle = pm.variables.get(\"cycle\") || 1;\r",
+							"\r",
+							"// // Test Cases on first name\r",
+							"if (cycle == 1)\r",
+							"{\r",
+							"    pm.collectionVariables.set(\"cycles\", 3);\r",
+							"    pm.collectionVariables.set(\"testCase\", \"Negative Test - Fetch post with invalid ID\");\r",
+							"    pm.collectionVariables.set(\"id\", \"invalid ID\");\r",
+							"}\r",
+							"if (cycle == 2)\r",
+							"{\r",
+							"    pm.collectionVariables.set(\"testCase\", \"Negative Test - Fetch post without ID\");\r",
+							"    pm.collectionVariables.set(\"id\", null);\r",
+							"}\r",
+							"if (cycle == 3)\r",
+							"{\r",
+							"    pm.collectionVariables.set(\"testCase\", \"Positive Test - Fetch post with valid ID\");\r",
+							"    pm.collectionVariables.set(\"id\", post?.id);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let cycle = pm.variables.get(\"cycle\") || 1;\r",
+							"let cycles = pm.variables.get(\"cycles\");\r",
+							"let test_case = pm.variables.get(\"testCase\");\r",
+							"\r",
+							"if(cycle < Number(cycles)) {\r",
+							"    pm.test(test_case, () => pm.response.to.not.have.status(200));\r",
+							"    pm.collectionVariables.set(\"cycle\", Number(cycle)+1); // increment test cycle\r",
+							"    pm.execution.setNextRequest(\"Get post\"); // rerun endpoint.\r",
+							"}\r",
+							"else{\r",
+							"    pm.test(test_case, () => pm.response.to.have.status(200));\r",
+							"    pm.collectionVariables.set(\"cycle\", 1); // return test cycle to 0\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/posts/{{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posts",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add post",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let testCase = pm.variables.get(\"testCase\"); \r",
+							"let cycle = pm.variables.get(\"cycle\") || 1;\r",
+							"\r",
+							"// // Test Cases on first name\r",
+							"if (cycle == 1)\r",
+							"{\r",
+							"    pm.collectionVariables.set(\"cycles\", 4);\r",
+							"    pm.collectionVariables.set(\"uid\", 1);\r",
+							"    pm.collectionVariables.set(\"testCase\", \"Negative Test - Create post without title\");\r",
+							"    pm.collectionVariables.set(\"title\", \"\");\r",
+							"}\r",
+							"if (cycle == 2)\r",
+							"{\r",
+							"    pm.collectionVariables.set(\"title\", \"This is a simple title.\");\r",
+							"    pm.collectionVariables.set(\"testCase\", \"Negative Test - Create post without body\");\r",
+							"    pm.collectionVariables.set(\"body\", \"\");\r",
+							"}\r",
+							"if (cycle == 3)\r",
+							"{\r",
+							"    pm.collectionVariables.set(\"body\", \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\");\r",
+							"    pm.collectionVariables.set(\"testCase\", \"Negative Test - Create post without user ID\");\r",
+							"    pm.collectionVariables.set(\"uid\", null);\r",
+							"}\r",
+							"if (cycle == 4)\r",
+							"{\r",
+							"    pm.collectionVariables.set(\"testCase\", \"Positive Test - Create new post\");\r",
+							"    pm.collectionVariables.set(\"uid\", 1);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let cycle = pm.variables.get(\"cycle\") || 1;\r",
+							"let cycles = pm.variables.get(\"cycles\");\r",
+							"let test_case = pm.variables.get(\"testCase\");\r",
+							"\r",
+							"if(cycle < Number(cycles)) {\r",
+							"    pm.test(test_case, () => pm.response.to.not.have.status(201));\r",
+							"    pm.collectionVariables.set(\"cycle\", Number(cycle)+1); // increment test cycle\r",
+							"    pm.execution.setNextRequest(\"Add post\"); // rerun endpoint.\r",
+							"}\r",
+							"else{\r",
+							"    pm.test(test_case, () => pm.response.to.have.status(201));\r",
+							"    pm.collectionVariables.set(\"cycle\", 1); // return test cycle to 0\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"{{title}}\",\r\n    \"body\": \"{{body}}\",\r\n    \"userId\": {{uid}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/posts",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update post",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let testCase = pm.variables.get(\"testCase\"); \r",
+							"let cycle = pm.variables.get(\"cycle\") || 1;\r",
+							"let posts = JSON.parse(pm.variables.get(\"posts\"));\r",
+							"let post = posts[0];\r",
+							"\r",
+							"// // Test Cases on first name\r",
+							"if (cycle == 1)\r",
+							"{\r",
+							"    pm.collectionVariables.set(\"cycles\", 4);\r",
+							"    pm.collectionVariables.set(\"testCase\", \"Negative Test - Update post without an ID\");\r",
+							"    pm.collectionVariables.set(\"id\", null);\r",
+							"}\r",
+							"if (cycle == 2)\r",
+							"{\r",
+							"    pm.collectionVariables.set(\"id\", post?.id);\r",
+							"    pm.collectionVariables.set(\"testCase\", \"Negative Test - Update post without title\");\r",
+							"    pm.collectionVariables.set(\"title\", \"\");\r",
+							"}\r",
+							"if (cycle == 3)\r",
+							"{\r",
+							"    pm.collectionVariables.set(\"title\", \"updated test title\");\r",
+							"    pm.collectionVariables.set(\"testCase\", \"Negative Test - Update post without body\");\r",
+							"    pm.collectionVariables.set(\"body\", \"\");\r",
+							"}\r",
+							"if (cycle == 4)\r",
+							"{\r",
+							"    pm.collectionVariables.set(\"body\", \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\");\r",
+							"    pm.collectionVariables.set(\"testCase\", \"Negative Test - Update post without user ID\");\r",
+							"    pm.collectionVariables.set(\"uid\", \"\");\r",
+							"}\r",
+							"if (cycle == 4)\r",
+							"{\r",
+							"    pm.collectionVariables.set(\"testCase\", \"Positive Test - Update a post\");\r",
+							"    pm.collectionVariables.set(\"uid\", 1);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let cycle = pm.variables.get(\"cycle\") || 1;\r",
+							"let cycles = pm.variables.get(\"cycles\");\r",
+							"let test_case = pm.variables.get(\"testCase\");\r",
+							"\r",
+							"if(cycle < Number(cycles)) {\r",
+							"    pm.test(test_case, () => pm.response.to.not.have.status(200));\r",
+							"    pm.collectionVariables.set(\"cycle\", Number(cycle)+1); // increment test cycle\r",
+							"    pm.execution.setNextRequest(\"Update post\"); // rerun endpoint.\r",
+							"}\r",
+							"else{\r",
+							"    pm.test(test_case, () => pm.response.to.have.status(200));\r",
+							"    pm.collectionVariables.set(\"cycle\", 1); // return test cycle to 0\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{id}},\r\n    \"title\": \"{{title}}\",\r\n    \"body\": \"{{body}}\",\r\n    \"userId\": {{uid}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/posts/{{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posts",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://jsonplaceholder.typicode.com",
+			"type": "string"
+		},
+		{
+			"key": "posts",
+			"value": ""
+		},
+		{
+			"key": "id",
+			"value": "1",
+			"type": "default"
+		},
+		{
+			"key": "testCase",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "cycle",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "cycles",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "title",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "body",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "uid",
+			"value": "",
+			"type": "default"
+		}
+	]
+}

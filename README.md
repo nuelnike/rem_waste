@@ -44,7 +44,7 @@ These test scripts simulate real user behavior to ensure that core features of y
 - npx cypress run
 
 ## Credentials Used for Testing
-- BaseURL: http://qa.nuelnike.com:5000
+- BaseURL: https://simple-todo-manager.onrender.com
 - Username: tester
 - Password: p@ssword
 
